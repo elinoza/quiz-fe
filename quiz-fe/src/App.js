@@ -9,7 +9,7 @@ import Body from "./components/Body"
 function App() {
   return (
     <div >
-  <Container className="main my-5 shadow">
+  <Container className="main my-1 shadow">
  
     <Row>
       <Col  >
