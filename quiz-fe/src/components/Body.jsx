@@ -22,7 +22,8 @@ class Body extends React.Component{
         answers:{
             question:0,
             answer:1
-        }
+        },
+        score:0
         
     }
     
@@ -100,6 +101,14 @@ class Body extends React.Component{
 
 
        }
+
+       getResults= async()=>{
+        const url=`http://localhost:3005/exams`
+        let response= await fetch(`${url}/${this.state.examInfo._id}`)
+        let examInfo=await response.json()
+        console.log(examInfo)
+        this.setState({score:examInfo})
+       }
         nextQuo=async ()=>{
             try{ 
                 // const url=process.env.REACT_APP_Url
@@ -117,10 +126,8 @@ class Body extends React.Component{
                      let answers={...this.state.answers}
                      if (questionIndex===4)
                      {
-                        
-                        // let examInfo=await response.json()
-                       
                          this.setState({ start:"finish"})
+                         this.getResults()
                        }
                         
                       else{questionIndex+=1
@@ -190,7 +197,7 @@ class Body extends React.Component{
                         <div className="question my-5">
                             
                         <h5>{this.state.questions[this.state.answers.question].text}</h5>
-                        {!this.state.questions[this.state.answers.question].img === null && <Image src="holder.js/171x180" rounded />}
+                        {/* {!this.state.questions[this.state.answers.question].img === null && <Image src="holder.js/171x180" rounded />} */}
                         
                         </div>
                     
@@ -207,9 +214,19 @@ class Body extends React.Component{
                 </div>
                 }
                 {this.state.start=== "finish" && 
-                <div><p>FINISHED</p>
-                <GiTrophyCup style={{ fontSize:"100px", color:"#4F6D7A",textShadow: "2px 2px 50px white"}}/>
+                <>
+                <div className=" d-flex flex-flow-column align-items-center justify-content-center  text-center my-5 finish">
+                  
+                    <h1 className="d-block">FINISHED</h1>
+                    
+                        <div><GiTrophyCup style={{ fontSize:"100px", color:"#DD6E42",textShadow: "20px 20px 50px yellow"}}/></div>
+                     
+                    
+                    <h3 >YOUR SCORE </h3>
+                    
                 </div>
+                <div className="d-flex flex-flow-column align-items-center justify-content-center  text-center my-5 finish"><h1> {this.state.score.totalScore}</h1></div>
+                </>
                 }
 
                 
