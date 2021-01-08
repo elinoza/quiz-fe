@@ -1,0 +1,21 @@
+
+.main {
+    background-color:#4F6D7A; 
+    font-size: 14px;
+    font-family:"Circular", "-apple-system", "system-ui", "Roboto", "Helvetica Neue", sans-serif;
+    color:#EAEAEA;
+    border:1px solid #4F6D7A ;
+    border-radius:2%;
+    padding:20px;
+    
+
+}
+.app{
+    padding:20px;
+    height:500px;
+    border:1px solid;
+    
+
+}
+
+
