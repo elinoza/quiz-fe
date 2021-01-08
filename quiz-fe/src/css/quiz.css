@@ -18,4 +18,20 @@
 
 }
 
+button.btn{
+
+    width:250px;
+    height:50px;
+    padding:5px;
+    margin:10px;
+    background-color:#EAEAEA;
+    border-color:#EAEAEA;
+    color:black;
+}
+button.btn:hover{
+    transform :  scaleX(1.1);
+    background-color:#DD6E42 ;
+    border-color:#DD6E42;
+}
+
 
