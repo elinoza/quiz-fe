@@ -11,7 +11,7 @@ class NavBar extends React.Component{
 
   <Navbar className="shadow d-flex justify-content-between " style={{backgroundColor:"#C0D6DF"}}>
     <Navbar.Brand href="#home">
-     <GiBrain style={{ fontSize:"32px", color:"#4F6D7A",boxShadow:"30px black"}}/>
+     <GiBrain style={{ fontSize:"32px", color:"#4F6D7A",textShadow: "2px 2px 50px white"}}/>
     </Navbar.Brand>
    
     <h1 style={{color:"#4F6D7A",textShadow: "2px 2px 8px white"}}>QUIZ GAME</h1>

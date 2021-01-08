@@ -1,5 +1,6 @@
 import React from "react"
 import {Container,Button, Form, Row, Col,Image} from "react-bootstrap"
+import { GiTrophyCup} from 'react-icons/gi'
 
 
 // -in the first page there should be name and start buttton 
@@ -12,15 +13,15 @@ class Body extends React.Component{
 
     state={
         questions:[],
-        start:false,
+        start:"false",
         examInfo:[],
         body : {
             candidateName:"" },
         loading:false,
         errMessage:'',
         answers:{
-            question:'',
-            answer:''
+            question:0,
+            answer:1
         }
         
     }
@@ -88,11 +89,17 @@ class Body extends React.Component{
             this.setState({
                  examInfo:examInfo,
                  questions:examInfo.questions,
-                 start:true})
+                 start:"true"})
         }
         getQuestions=async ()=>{ let examInfo= await this.fetch();this.manageState(examInfo)}
 
-        next=async(e)=>{await this.setState({answers{answer:e.currentTarget.value }});this.nextQuo()}
+        next=async(e)=>{
+            let answers={...this.state.answers}
+		    answers.answer = parseInt(e.currentTarget.value) 
+		    this.setState({ answers:answers})
+
+
+       }
         nextQuo=async ()=>{
             try{ 
                 // const url=process.env.REACT_APP_Url
@@ -106,10 +113,22 @@ class Body extends React.Component{
              })
              console.log(response)
                  if (response.ok) {
-                   
-                     console.log("ok")
+                     let questionIndex=this.state.answers.question
+                     let answers={...this.state.answers}
+                     if (questionIndex===4)
+                     {
+                        
+                        // let examInfo=await response.json()
+                       
+                         this.setState({ start:"finish"})
+                       }
+                        
+                      else{questionIndex+=1
+                        answers.question = questionIndex
+                      this.setState({ answers:answers })
+                        }
                      
-                     }
+                    }
                  else{
                  console.log("an error occurred")
                  let error = await response.json()
@@ -117,7 +136,8 @@ class Body extends React.Component{
                      errMessage: error.message,
                      loading: false,
                      
-                 })}
+                 })
+                }
                  
              }
              catch(e){
@@ -137,7 +157,7 @@ class Body extends React.Component{
                 <h6 className="d-inline"> You should answer 5 question</h6>
                 <h6 className="d-inline ml-auto"> Remaining time: 60 seconds</h6>
                 </div>
-                { !this.state.start ?
+                { this.state.start=== "false" &&
                 <div className="answers  align-items-center justify-content-center  text-center my-5">
                     
                     <Row className="my-5">
@@ -163,25 +183,35 @@ class Body extends React.Component{
                             
                         </Row>
                     
-                    </div> : 
+                    </div> 
+                } 
+                { this.state.start === "true" &&
                     <div>
                         <div className="question my-5">
                             
-                        <h5>{this.state.questions[0].text}</h5>
-                        {!this.state.questions[0].img === null && <Image src="holder.js/171x180" rounded />}
+                        <h5>{this.state.questions[this.state.answers.question].text}</h5>
+                        {!this.state.questions[this.state.answers.question].img === null && <Image src="holder.js/171x180" rounded />}
                         
                         </div>
                     
                     <div className="answers  align-items-center justify-content-center  text-center my-5 ">
                         <Row className="my-5">
-                            <Col xs={12} md={6}><Button value="0" onClick={this.nextQuo} className="shadow" >{this.state.questions[0].answers[0].text}</Button>{' '}</Col>
-                            <Col xs={12} md={6}><Button value="1" className="shadow">{this.state.questions[0].answers[1].text}</Button>{' '}</Col>
-                            <Col xs={12} md={6}><Button  value="2"className="shadow">{this.state.questions[0].answers[2].text}</Button>{' '}</Col>
-                            <Col xs={12} md={6}><Button  value="3"className="shadow">{this.state.questions[0].answers[3].text}</Button>{' '}</Col>
+                            <Col xs={12} md={6}><Button value="0" onClick={this.next} className="shadow" >{this.state.questions[this.state.answers.question].answers[0].text}</Button>{' '}</Col>
+                            <Col xs={12} md={6}><Button value="1" onClick={this.next} className="shadow">{this.state.questions[this.state.answers.question].answers[1].text}</Button>{' '}</Col>
+                            <Col xs={12} md={6}><Button  value="2" onClick={this.next} className="shadow">{this.state.questions[this.state.answers.question].answers[2].text}</Button>{' '}</Col>
+                            <Col xs={12} md={6}><Button  value="3" onClick={this.next}  className="shadow">{this.state.questions[this.state.answers.question].answers[3].text}</Button>{' '}</Col>
                         </Row>
+                        
                         </div>
+                        <Button  onClick={this.nextQuo}className="shadow">NEXT </Button>{' '}
                 </div>
                 }
+                {this.state.start=== "finish" && 
+                <div><p>FINISHED</p>
+                <GiTrophyCup style={{ fontSize:"100px", color:"#4F6D7A",textShadow: "2px 2px 50px white"}}/>
+                </div>
+                }
+
                 
             </Container>
 
