@@ -20,7 +20,7 @@ class Body extends React.Component {
     errMessage: "",
     answers: {
       question: 0,
-      answer: 1,
+      answer: null,
     },
     score: 0,
   };
@@ -28,6 +28,7 @@ class Body extends React.Component {
   updateField = (e) => {
     let body = { ...this.state.body };
     let currentid = e.currentTarget.id;
+    console.log(e.currentTarget.id)
 
     body[currentid] = e.currentTarget.value;
     this.setState({ body: body });
@@ -35,8 +36,8 @@ class Body extends React.Component {
 
   fetch = async () => {
     try {
-      // const url=process.env.REACT_APP_Url
-      const url = "http://localhost:3005/exams";
+     const url=process.env.REACT_APP_Url
+      //const url = "http://localhost:3005/exams";
       let response = await fetch(`${url}/start`, {
         method: "POST",
         body: JSON.stringify(this.state.body),
@@ -93,7 +94,8 @@ class Body extends React.Component {
   };
 
   getResults = async () => {
-    const url = `http://localhost:3005/exams`;
+    const url=process.env.REACT_APP_Url
+    //const url = `http://localhost:3005/exams`;
     let response = await fetch(`${url}/${this.state.examInfo._id}`);
     let examInfo = await response.json();
     console.log(examInfo);
@@ -101,8 +103,8 @@ class Body extends React.Component {
   };
   nextQuo = async () => {
     try {
-      // const url=process.env.REACT_APP_Url
-      const url = `http://localhost:3005/exams`;
+       const url=process.env.REACT_APP_Url
+      //const url = `http://localhost:3005/exams`;
       let response = await fetch(`${url}/${this.state.examInfo._id}/answer`, {
         method: "POST",
         body: JSON.stringify(this.state.answers),
@@ -162,10 +164,11 @@ class Body extends React.Component {
                       onChange={this.updateField}
                     />
                   </Form.Group>
-
+{this.state.body.candidateName && 
                   <Button className="shadow" type="submit">
                     START
                   </Button>
+                  }
                 </Form>
               </Col>
             </Row>
@@ -212,10 +215,11 @@ class Body extends React.Component {
                   </Button>{" "}
                 </Col>
               </Row>
-            </div>
-            <Button onClick={this.nextQuo} className="shadow">
-              NEXT{" "}
-            </Button>{" "}
+            </div>{this.state.answers.answer != null && 
+             <Button onClick={this.nextQuo} className="shadow">
+             NEXT{" "}
+           </Button>}
+           
           </div>
         )}
         {this.state.start === "finish" && (
