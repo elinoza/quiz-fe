@@ -10,6 +10,9 @@ import { GiTrophyCup } from "react-icons/gi";
 
 class Body extends React.Component {
   state = {
+    intervalId: 0,
+    remainingTime: 10,
+    timeOut:false,
     questions: [],
     start: "false",
     examInfo: [],
@@ -28,7 +31,7 @@ class Body extends React.Component {
   updateField = (e) => {
     let body = { ...this.state.body };
     let currentid = e.currentTarget.id;
-    console.log(e.currentTarget.id)
+    console.log(e.currentTarget.id);
 
     body[currentid] = e.currentTarget.value;
     this.setState({ body: body });
@@ -36,7 +39,7 @@ class Body extends React.Component {
 
   fetch = async () => {
     try {
-     const url=process.env.REACT_APP_Url
+      const url = process.env.REACT_APP_Url;
       //const url = "http://localhost:3005/exams";
       let response = await fetch(`${url}/start`, {
         method: "POST",
@@ -44,7 +47,7 @@ class Body extends React.Component {
         headers: new Headers({
           "Content-Type": "application/json",
         }),
-      }); 
+      });
       console.log(response);
       if (response.ok) {
         let examInfo = await response.json();
@@ -73,6 +76,14 @@ class Body extends React.Component {
   submitForm = (e) => {
     e.preventDefault();
     this.setState({ loading: true });
+    let newIntervalId;
+    if (this.state.remainingTime > 0) {
+      newIntervalId = setInterval(() => {
+        this.timer();
+      }, 1000);
+    }
+    this.setState({ intervalId: newIntervalId });
+
     this.getQuestions();
   };
   manageState = (examInfo) => {
@@ -94,22 +105,21 @@ class Body extends React.Component {
   };
 
   getResults = async () => {
-    const url=process.env.REACT_APP_Url
+    const url = process.env.REACT_APP_Url;
     //const url = `http://localhost:3005/exams`;
     let response = await fetch(`${url}/${this.state.examInfo._id}`);
     let examInfo = await response.json();
-    console.log(examInfo);
+    console.log(examInfo, this.state.remainingTime);
     this.setState({ score: examInfo });
   };
   nextQuo = async () => {
     try {
-       const url=process.env.REACT_APP_Url
+      const url = process.env.REACT_APP_Url;
       //const url = `http://localhost:3005/exams`;
       let response = await fetch(`${url}/${this.state.examInfo._id}/answer`, {
         method: "POST",
         body: JSON.stringify(this.state.answers),
-        headers: new Headers
-        ({
+        headers: new Headers({
           "Content-Type": "application/json",
         }),
       });
@@ -117,7 +127,7 @@ class Body extends React.Component {
       if (response.ok) {
         let questionIndex = this.state.answers.question;
         let answers = { ...this.state.answers };
-        if (questionIndex === this.state.questions.length-1) {
+        if (questionIndex === this.state.questions.length - 1) {
           this.setState({ start: "finish" });
           this.getResults();
         } else {
@@ -141,14 +151,28 @@ class Body extends React.Component {
       });
     }
   };
+  timer = () => {
+    let remainingTime = this.state.remainingTime;
+
+    this.setState({ remainingTime: remainingTime - 1 });
+
+    console.log(this.state.remainingTime);
+    if (this.state.remainingTime === 0) {
+      clearInterval(this.state.intervalId);
+      this.getResults()
+      this.setState({start:"finish", timeOut :true})
+    }
+  };
 
   render() {
     return (
       <Container className=" align-items-center justify-content-center   app mt-5  ">
-        
         <div className=" border-bottom d-flex">
           <h6 className="d-inline"> You should answer 5 question</h6>
-          <h6 className="d-inline ml-auto"> Remaining time: 60 seconds</h6>
+          <h6 className="d-inline ml-auto">
+            {" "}
+            Remaining time: {this.state.remainingTime} seconds
+          </h6>
         </div>
         {this.state.start === "false" && (
           <div className="answers  align-items-center justify-content-center  text-center my-5">
@@ -165,17 +189,17 @@ class Body extends React.Component {
                       onChange={this.updateField}
                     />
                   </Form.Group>
-{this.state.body.candidateName && 
-                  <Button className="shadow" type="submit">
-                    START
-                  </Button>
-                  }
+                  {this.state.body.candidateName && (
+                    <Button className="shadow" type="submit">
+                      START
+                    </Button>
+                  )}
                 </Form>
               </Col>
             </Row>
           </div>
-        )} 
-               
+        )}
+
         {this.state.start === "true" && (
           <div>
             <div className="question my-5">
@@ -217,17 +241,18 @@ class Body extends React.Component {
                   </Button>{" "}
                 </Col>
               </Row>
-            </div>{this.state.answers.answer != null && 
-             <Button onClick={this.nextQuo} className="shadow">
-             NEXT{" "}
-           </Button>}
-           
+            </div>
+            {this.state.answers.answer != null && (
+              <Button onClick={this.nextQuo} className="shadow">
+                NEXT{" "}
+              </Button>
+            )}
           </div>
         )}
         {this.state.start === "finish" && (
           <>
             <div className=" d-flex flex-flow-column align-items-center justify-content-center  text-center my-5 finish">
-              <h1 className="d-block">FINISHED</h1>
+             <h1 className="d-block">{ this.state.timeOut === true ? "TIME IS OUT! ": "FINISHED" } </h1>
 
               <div>
                 <GiTrophyCup
@@ -244,11 +269,13 @@ class Body extends React.Component {
             <div className="d-flex flex-flow-column align-items-center justify-content-center  text-center my-5 finish">
               <h1> {this.state.score.totalScore}</h1>
             </div>
-            
-                  <Button className="shadow" onClick={()=> window.location.reload(false)}>
-                 REPLAY
-                  </Button>
-                  
+
+            <Button
+              className="shadow"
+              onClick={() => window.location.reload(false)}
+            >
+              REPLAY
+            </Button>
           </>
         )}
       </Container>

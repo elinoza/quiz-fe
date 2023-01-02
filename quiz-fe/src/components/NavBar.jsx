@@ -15,7 +15,7 @@ class NavBar extends React.Component{
     </Navbar.Brand>
    
     <h1 style={{color:"#4F6D7A",textShadow: "2px 2px 8px white"}}>QUIZ GAME</h1>
-    <IoClose style={{fontSize:"32px",color:"#4F6D7A"}}/>
+    <IoClose style={{fontSize:"32px",color:"#4F6D7A",cursor: "pointer"}}  onClick={() => window.location.reload(false)} />
 
     
    
