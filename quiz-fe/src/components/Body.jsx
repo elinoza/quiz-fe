@@ -145,6 +145,7 @@ class Body extends React.Component {
   render() {
     return (
       <Container className=" align-items-center justify-content-center   app mt-5  ">
+        
         <div className=" border-bottom d-flex">
           <h6 className="d-inline"> You should answer 5 question</h6>
           <h6 className="d-inline ml-auto"> Remaining time: 60 seconds</h6>
@@ -173,7 +174,8 @@ class Body extends React.Component {
               </Col>
             </Row>
           </div>
-        )}
+        )} 
+               
         {this.state.start === "true" && (
           <div>
             <div className="question my-5">
@@ -242,6 +244,11 @@ class Body extends React.Component {
             <div className="d-flex flex-flow-column align-items-center justify-content-center  text-center my-5 finish">
               <h1> {this.state.score.totalScore}</h1>
             </div>
+            
+                  <Button className="shadow" onClick={()=> window.location.reload(false)}>
+                 REPLAY
+                  </Button>
+                  
           </>
         )}
       </Container>
