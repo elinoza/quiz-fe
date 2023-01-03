@@ -116,6 +116,7 @@ class Body extends React.Component {
   nextQuo = async () => {
     try {
       const url = process.env.REACT_APP_Url;
+      let quoNum= this.state.quoNum
       //const url = `http://localhost:3005/exams`;
       let response = await fetch(`${url}/${this.state.examInfo._id}/answer`, {
         method: "POST",
@@ -134,7 +135,7 @@ class Body extends React.Component {
         } else {
           questionIndex += 1;
           answers.question = questionIndex;
-          this.setState({ answers: answers });
+          this.setState({ answers: answers, quoNum: quoNum+1});
         }
       } else {
         console.log("an error occurred");
@@ -169,7 +170,7 @@ class Body extends React.Component {
     return (
       <Container className=" align-items-center justify-content-center   app mt-5  ">
         <div className=" border-bottom d-flex">
-          <h6 className="d-inline"> {this.state.start === "false" ?  "You should answer 5 question" : this.state.quoNum + ". Question"} </h6>
+          <h6 className="d-inline"> {  this.state.start === "false" && "You should answer 5 question" } {  this.state.start === "true" ? this.state.quoNum + ". Question": "Finished"} </h6>
           <h6 className="d-inline ml-auto">
             {" "}
             Remaining time: {this.state.remainingTime} seconds
