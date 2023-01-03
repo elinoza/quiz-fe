@@ -168,7 +168,8 @@ class Body extends React.Component {
 
   render() {
     return (
-      <Container className=" align-items-center justify-content-center   app mt-5  ">
+      <Container className="  app mt-5  ">
+        <div>
         <div className=" border-bottom d-flex">
           <h6 className="d-inline"> {  this.state.start === "false" && "You should answer 5 question" } {  this.state.start === "true" && 
            this.state.quoNum + ". Question"} </h6>
@@ -176,6 +177,7 @@ class Body extends React.Component {
           {  this.state.start === "true" && 
             "Remaining time:"+ this.state.remainingTime + " seconds"} 
           </h6>
+        </div>
         </div>
         {this.state.start === "false" && (
           <div className="answers  align-items-center justify-content-center  text-center my-5">
@@ -246,18 +248,20 @@ class Body extends React.Component {
               </Row>
             </div>
             {this.state.answers.answer != null && (
-              <Button onClick={this.nextQuo} className="shadow">
+              <div className="d-flex flex-flow-column align-items-center justify-content-center  text-center my-3 ">
+              <Button onClick={this.nextQuo} className=" shadow">
                 NEXT{" "}
               </Button>
+              </div>
             )}
           </div>
         )}
         {this.state.start === "finish" && (
-          <>
-            <div className=" d-flex flex-flow-column align-items-center justify-content-center  text-center my-5 finish">
+          <div>
+            <div className=" flex-flow-column align-items-center justify-content-center  text-center my-5 finish">
              <h1 className="d-block">{ this.state.timeOut === true ? "TIME IS OUT! ": "FINISHED" } </h1>
 
-              <div>
+              <div className="my-3 ">
                 <GiTrophyCup
                   style={{
                     fontSize: "100px",
@@ -268,11 +272,9 @@ class Body extends React.Component {
               </div>
 
               <h3>YOUR SCORE </h3>
-            </div>
-            <div className="d-flex flex-flow-column align-items-center justify-content-center  text-center my-5 finish">
               <h1> {this.state.score.totalScore}</h1>
             </div>
-            <div className ="buttons">
+            <div className="d-flex flex-flow-column align-items-center justify-content-center  text-center my-3 ">
             <Button
               className="shadow "
               onClick={() => window.location.reload(false)}
@@ -280,7 +282,8 @@ class Body extends React.Component {
               REPLAY
             </Button>
             </div>
-          </>
+          
+          </div>
         )}
       </Container>
     );
