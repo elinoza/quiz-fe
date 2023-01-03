@@ -41,4 +41,7 @@ button.btn:active{
     background-color:#DD6E42 ;
     border-color:#DD6E42;
 }
+.buttons {
+    align-items: center
+}
 

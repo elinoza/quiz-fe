@@ -10,8 +10,9 @@ import { GiTrophyCup } from "react-icons/gi";
 
 class Body extends React.Component {
   state = {
+    quoNum:1,
     intervalId: 0,
-    remainingTime: 10,
+    remainingTime: 60,
     timeOut:false,
     questions: [],
     start: "false",
@@ -168,7 +169,7 @@ class Body extends React.Component {
     return (
       <Container className=" align-items-center justify-content-center   app mt-5  ">
         <div className=" border-bottom d-flex">
-          <h6 className="d-inline"> You should answer 5 question</h6>
+          <h6 className="d-inline"> {this.state.start === "false" ?  "You should answer 5 question" : this.state.quoNum + ". Question"} </h6>
           <h6 className="d-inline ml-auto">
             {" "}
             Remaining time: {this.state.remainingTime} seconds
@@ -269,13 +270,14 @@ class Body extends React.Component {
             <div className="d-flex flex-flow-column align-items-center justify-content-center  text-center my-5 finish">
               <h1> {this.state.score.totalScore}</h1>
             </div>
-
+            <div className ="buttons">
             <Button
-              className="shadow"
+              className="shadow "
               onClick={() => window.location.reload(false)}
             >
               REPLAY
             </Button>
+            </div>
           </>
         )}
       </Container>
