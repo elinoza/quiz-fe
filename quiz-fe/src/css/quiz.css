@@ -3,7 +3,7 @@ body{
     background-color:#fff9e9
 }
 .main {
-    background-color:#4F6D7A; 
+    background-color:#291a58; 
     font-size: 14px;
     font-family:"Circular", "-apple-system", "system-ui", "Roboto", "Helvetica Neue", sans-serif;
     color:#EAEAEA;
@@ -15,8 +15,8 @@ body{
 }
 .app{
     display:flex;
-    justify-content:center;
-    align-items:center;
+    flex-flow: column;
+   
     padding:20px;
     height:600px;
     border:1px solid;

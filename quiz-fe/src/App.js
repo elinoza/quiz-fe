@@ -10,13 +10,12 @@ function App() {
   return (
     <div >
   <Container className="main my-1 shadow">
- 
-    <Row>
-      <Col  >
+
+  
       <NavBar/>
-        <Body />
-      </Col>
-    </Row>
+      <Body />
+     
+ 
         
       
     </Container>

@@ -169,8 +169,8 @@ class Body extends React.Component {
   render() {
     return (
       <Container className="  app mt-5  ">
-        <div>
-        <div className=" border-bottom d-flex">
+      
+        <div className=" border-bottom d-flex ">
           <h6 className="d-inline"> {  this.state.start === "false" && "You should answer 5 question" } {  this.state.start === "true" && 
            this.state.quoNum + ". Question"} </h6>
           <h6 className="d-inline ml-auto">
@@ -204,7 +204,7 @@ class Body extends React.Component {
             </Row>
           </div>
         )}
- </div>
+
         {this.state.start === "true" && (
           <div>
             <div className="question my-5">
