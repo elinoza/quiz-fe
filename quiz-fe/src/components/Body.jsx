@@ -178,7 +178,7 @@ class Body extends React.Component {
             "Remaining time:"+ this.state.remainingTime + " seconds"} 
           </h6>
         </div>
-        </div>
+       
         {this.state.start === "false" && (
           <div className="answers  align-items-center justify-content-center  text-center my-5">
             <Row className="my-5">
@@ -204,7 +204,7 @@ class Body extends React.Component {
             </Row>
           </div>
         )}
-
+ </div>
         {this.state.start === "true" && (
           <div>
             <div className="question my-5">
