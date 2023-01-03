@@ -12,7 +12,7 @@ class Body extends React.Component {
   state = {
     quoNum:1,
     intervalId: 0,
-    remainingTime: 60,
+    remainingTime: 10,
     timeOut:false,
     questions: [],
     start: "false",
@@ -53,8 +53,8 @@ class Body extends React.Component {
       if (response.ok) {
         let examInfo = await response.json();
         let questions = examInfo.questions;
-
-        console.log("examInfo:", questions);
+  this.setState({remainingTime:examInfo.totalDuration })
+        console.log("examInfo:", questions,examInfo);
 
         return examInfo;
       } else {
@@ -158,7 +158,7 @@ class Body extends React.Component {
 
     this.setState({ remainingTime: remainingTime - 1 });
 
-    console.log(this.state.remainingTime);
+ 
     if (this.state.remainingTime === 0) {
       clearInterval(this.state.intervalId);
       this.getResults()
@@ -170,10 +170,11 @@ class Body extends React.Component {
     return (
       <Container className=" align-items-center justify-content-center   app mt-5  ">
         <div className=" border-bottom d-flex">
-          <h6 className="d-inline"> {  this.state.start === "false" && "You should answer 5 question" } {  this.state.start === "true" ? this.state.quoNum + ". Question": "Finished"} </h6>
+          <h6 className="d-inline"> {  this.state.start === "false" && "You should answer 5 question" } {  this.state.start === "true" && 
+           this.state.quoNum + ". Question"} </h6>
           <h6 className="d-inline ml-auto">
-            {" "}
-            Remaining time: {this.state.remainingTime} seconds
+          {  this.state.start === "true" && 
+            "Remaining time:"+ this.state.remainingTime + " seconds"} 
           </h6>
         </div>
         {this.state.start === "false" && (
