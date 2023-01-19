@@ -9,10 +9,10 @@ import Body from "./components/Body"
 function App() {
   return (
     <div >
-  <Container className="main my-1 shadow">
+  <Container className="main my-5 ">
 
   
-      <NavBar/>
+    
       <Body />
      
  

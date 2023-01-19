@@ -1,15 +1,22 @@
 
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:700,300);
 body{
     background-color:#fff9e9
 }
 .main {
-    background-color:#291a58; 
-    font-size: 14px;
-    font-family:"Circular", "-apple-system", "system-ui", "Roboto", "Helvetica Neue", sans-serif;
+    background-color:#18BC9B; 
+    font-size: 22px;
+    font-family: 'Open Sans', Helvetica;
     color:#EAEAEA;
-    border:1px solid #4F6D7A ;
-    border-radius:2%;
+    box-shadow: 1px 2px 30px 0px rgba(0,0,0,0.3);
+    border-radius:2px;
     padding:20px;
+    width: 70%;
+    min-width: max-content;
+
+ 
+   
+   
     
 
 }
@@ -18,9 +25,8 @@ body{
     flex-flow: column;
    
     padding:20px;
-    height:600px;
-    border:1px solid;
 
+  
 
 }
 
@@ -32,6 +38,7 @@ button.btn{
     margin:10px;
     background-color:#EAEAEA;
     border-color:#EAEAEA;
+    border:2px;
     color:black;
 }
 button.btn:hover{
@@ -48,4 +55,59 @@ button.btn:active{
     align-items: center
 }
 
+.btn:active:focus {
+    background-color:#DD6E42 ;
+}
 
+
+@keyframes leaping {
+    0%{
+   transform: translateY(0%);
+   
+ }
+
+ 100%{
+   transform: translateY(-20px);
+   
+   }}
+@keyframes dotti {
+   0%, 60% {
+       transform: scale(0);
+       opacity: 0;
+   }
+   100% {
+       transform: scale(1);
+       opacity: 1;
+   }
+}
+   
+@keyframes submit {
+   0% {
+       transform: scale(1.1);
+       opacity: 1;
+   }
+
+   100% {
+       transform: scale(0);
+       opacity: 0;
+   }
+}
+.circle{
+stroke:white;stroke-width:3;fill:none;
+   transform-origin:center;stroke-linecap: round;
+}
+
+@keyframes dash {
+0% {
+       stroke-dashoffset: 0;
+       stroke-dasharray: 296 296;
+   transform: rotate(0deg)
+       
+   }
+   100% {
+       stroke-dashoffset: (-296*2 );;
+       stroke-dasharray: 296 296; 
+           transform: rotate(360deg)
+
+   }
+}

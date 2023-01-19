@@ -170,8 +170,8 @@ class Body extends React.Component {
     return (
       <Container className="  app mt-5  ">
       
-        <div className=" border-bottom d-flex ">
-          <h6 className="d-inline"> {  this.state.start === "false" && "You should answer 5 question" } {  this.state.start === "true" && 
+        <div className="  d-flex ">
+          <h6 className="d-inline"> {  this.state.start === "false" && "" } {  this.state.start === "true" && 
            this.state.quoNum + ". Question"} </h6>
           <h6 className="d-inline ml-auto">
           {  this.state.start === "true" && 
@@ -180,9 +180,9 @@ class Body extends React.Component {
         </div>
        
         {this.state.start === "false" && (
-          <div className="answers  align-items-center justify-content-center  text-center my-5">
-            <Row className="my-5">
-              <Col>
+          <div className="answers   align-items-center justify-content-center  text-center my-5">
+            <Row className="my-5 mx-5">
+              <Col className="mx-5">
                 <Form onSubmit={this.submitForm}>
                   <Form.Group controlId="name">
                     <Form.Label>Your Name & Surname </Form.Label>
