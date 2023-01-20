@@ -1,113 +1,195 @@
-
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:700,300);
-body{
-    background-color:#fff9e9
+body {
+  background-color: #fff9e9;
 }
 .main {
-    background-color:#18BC9B; 
-    font-size: 22px;
-    font-family: 'Open Sans', Helvetica;
-    color:#EAEAEA;
-    box-shadow: 1px 2px 30px 0px rgba(0,0,0,0.3);
-    border-radius:2px;
-    padding:20px;
-    width: 70%;
-    min-width: max-content;
+  background-color: #18bc9b;
+  font-size: 22px;
+  font-family: "Open Sans", Helvetica;
+  color: #eaeaea;
+  box-shadow: 1px 2px 30px 0px rgba(0, 0, 0, 0.3);
+  border-radius: 2px;
+  padding: 20px;
 
+}
+.app {
+  display: flex;
+  flex-flow: column;
+
+  padding: 20px;
+}
+
+button.btn {
+  width: 250px;
+  height: 50px;
+  padding: 5px;
+  margin: 10px;
+  background-color: #eaeaea;
+  border-color: #eaeaea;
+  border: 2px;
+  color: black;
+}
+button.btn:hover {
+  transform: scaleX(1.1);
+  background-color: #dd6e42;
+  border-color: #dd6e42;
+}
+button.btn:active {
+  transform: scaleX(1.1);
+  background-color: #dd6e42;
+  border-color: #dd6e42;
+}
+.wrapper.loading .dots {
+  animation: dotti 0.8s ease-in both;
+}
+.wrapper.loading .dots > div:nth-child(1) {
+  animation: leaping 0.6s ease-in-out forwards infinite alternate 0.4s;
+}
+.wrapper.loading .dots > div:nth-child(2) {
+  animation: leaping 0.6s ease-in-out forwards infinite alternate 0.2s;
+}
+.wrapper.loading .dots > div:nth-child(3) {
+  animation: leaping 0.6s ease-in-out forwards infinite alternate;
+}
+.wrapper.loading .circle {
+  animation: dash 4s linear infinite;
+}
+
+.wrapper.loading ~ .submitForm {
  
-   
-   
-    
-
-}
-.app{
-    display:flex;
-    flex-flow: column;
-   
-    padding:20px;
-
-  
-
+  animation: submit 0.6s ease-in-out forwards;
 }
 
-button.btn{
-
-    width:250px;
-    height:50px;
-    padding:5px;
-    margin:10px;
-    background-color:#EAEAEA;
-    border-color:#EAEAEA;
-    border:2px;
-    color:black;
-}
-button.btn:hover{
-    transform :  scaleX(1.1);
-    background-color:#DD6E42 ;
-    border-color:#DD6E42;
-}
-button.btn:active{
-    transform :  scaleX(1.1);
-    background-color:#DD6E42 ;
-    border-color:#DD6E42;
-}
 .buttons {
-    align-items: center
+  align-items: center;
 }
 
 .btn:active:focus {
-    background-color:#DD6E42 ;
+  background-color: #dd6e42;
+}
+
+.wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background: transparent;
+  width: 100px;
+  height: 100px;
+ 
+}
+
+.dots {
+  position: absolute;
+  display: flex;
+  opacity:0;
+}
+
+.dots > div {
+  background: white;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 
 @keyframes leaping {
-    0%{
-   transform: translateY(0%);
-   
- }
+  0% {
+    transform: translateY(0%);
+  }
 
- 100%{
-   transform: translateY(-20px);
-   
-   }}
+  100% {
+    transform: translateY(-20px);
+  }
+}
 @keyframes dotti {
-   0%, 60% {
-       transform: scale(0);
-       opacity: 0;
-   }
-   100% {
-       transform: scale(1);
-       opacity: 1;
-   }
+  0%,
+  60% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1 ;
+  }
 }
-   
-@keyframes submit {
-   0% {
-       transform: scale(1.1);
-       opacity: 1;
-   }
 
-   100% {
-       transform: scale(0);
-       opacity: 0;
-   }
+@keyframes submit {
+  0% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(0);
+    opacity: 0 !important;
+  }
 }
-.circle{
-stroke:white;stroke-width:3;fill:none;
-   transform-origin:center;stroke-linecap: round;
+.circle {
+  stroke: white;
+  stroke-width: 3;
+  fill: none;
+  transform-origin: center;
+  stroke-linecap: round;
+  opacity:0;
+}
+
+.quiz{
+   animation:quiz 5s ease-in-out forwards
+}
+.submitForm{
+animation:submitForm 5s ease-in-out forwards
+}
+@keyframes submitForm {
+	0% {
+    opacity: 0;
+	}
+    
+    20%{
+		opacity: 1;}
+    60%{ 
+		opacity: 1;}
+    
+	100% {
+	
+		opacity: 1;
+	}
+}
+
+@keyframes quiz {
+	0% {
+		transform: scale(0);
+		opacity: 1;
+	}
+    20%{transform: scale(1.5);
+		opacity: 1;}
+    60%{ transform: scale(1.5);
+		opacity: 1;}
+
+	100% {
+		transform: scale(0);
+		opacity: 0;
+	}
 }
 
 @keyframes dash {
-0% {
-       stroke-dashoffset: 0;
-       stroke-dasharray: 296 296;
-   transform: rotate(0deg)
-       
-   }
-   100% {
-       stroke-dashoffset: (-296*2 );;
-       stroke-dasharray: 296 296; 
-           transform: rotate(360deg)
+    0% {
+		stroke-dashoffset: 0;
+		stroke-dasharray:196 196;
+	transform: rotate(0deg);
+    opacity:0
+		
+	}
+  20%{opacity:1}
+	100% {
+		stroke-dashoffset: (-196*2 );;
+		stroke-dasharray: 196 196; 
+			transform: rotate(360deg);opacity:1
 
-   }
+	}
 }
