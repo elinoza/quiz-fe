@@ -97,6 +97,15 @@ button.btn:active {
   margin-right: 5px;
 }
 
+.timer{
+    background:white;
+    width:90px;
+    height:30px;
+    border-radius: 3px;
+    box-shadow: 2px 4px 8px 0 rgba(0,0,0,0.3);
+	padding: 0 6px;
+    color: #fff;
+}
 
 @keyframes leaping {
   0% {

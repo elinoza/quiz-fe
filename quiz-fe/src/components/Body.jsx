@@ -183,10 +183,11 @@ componentDidMount=()=>{
             {this.state.start === "false" && ""}{" "}
             {this.state.start === "true" && this.state.quoNum + ". Question"}{" "}
           </h6>
-          <h6 className="d-inline ml-auto">
-            {this.state.start === "true" &&
-              "Remaining time:" + this.state.remainingTime + " seconds"}
-          </h6>
+          {this.state.start === "true" && 
+          <div className=" timer d-inline ml-auto">
+            <h6>  "Remaining time:"  {this.state.remainingTime }  " seconds"</h6>
+            
+          </div>}
         </div>
 
         {this.state.start === "pre" && (
