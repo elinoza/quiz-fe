@@ -29,11 +29,10 @@ class Body extends React.Component {
     },
     score: 0,
   };
- 
-componentDidMount=()=>{
-  const myTimeout = setTimeout(() => this.setState({start:"false"}), 5000)
 
-}
+  componentDidMount = () => {
+    const myTimeout = setTimeout(() => this.setState({ start: "false" }), 5000);
+  };
   updateField = (e) => {
     let body = { ...this.state.body };
     let currentid = e.currentTarget.id;
@@ -80,7 +79,6 @@ componentDidMount=()=>{
   };
 
   afterSubmit = () => {
-  
     let newIntervalId;
     if (this.state.remainingTime > 0) {
       newIntervalId = setInterval(() => {
@@ -145,9 +143,9 @@ componentDidMount=()=>{
         } else {
           questionIndex += 1;
           answers.question = questionIndex;
-          answers.answer=null;
+          answers.answer = null;
           this.setState({ answers: answers, quoNum: quoNum + 1 });
-          console.log("answers",this.state.answers)
+          console.log("answers", this.state.answers);
         }
       } else {
         console.log("an error occurred");
@@ -173,37 +171,31 @@ componentDidMount=()=>{
     if (this.state.remainingTime === 0) {
       clearInterval(this.state.intervalId);
       this.getResults();
-      this.setState({start: "finish" });
-      if(this.state.start =! "finish"){ this.setState({timeOut:true })}
+      this.setState({ start: "finish", timeOut: true });
     }
   };
 
   render() {
     return (
       <Container className="  app mt-1  ">
-        {this.state.start === "true" &&  <div className="  d-flex quoNum p-2">
-   
-     
-       
-            Question {this.state.quoNum }  of   {this.state.questions.length}
-      
-         
-          <div className=" timer d-inline ml-auto text-center">
-          {this.state.remainingTime } 
-            
+        {this.state.start === "true" && (
+          <div className="  d-flex quoNum p-2">
+            Question {this.state.quoNum} of {this.state.questions.length}
+            <div className=" timer d-inline ml-auto text-center">
+              {this.state.remainingTime}
+            </div>
           </div>
-        </div>
-  }
+        )}
         {this.state.start === "pre" && (
           <div className=" answers  quiz  align-items-center justify-content-center  text-center my-5">
             <Row className="my-5 mx-5">
-            
               <Col className="mx-5">
-              <div > <h1>QUIZ</h1></div>
-                
+                <div>
+                  {" "}
+                  <h1>QUIZ</h1>
+                </div>
               </Col>
             </Row>
-
           </div>
         )}
 
@@ -211,23 +203,25 @@ componentDidMount=()=>{
           <div className="answers   align-items-center justify-content-center  text-center my-5">
             <Row className="my-5 mx-5">
               <Col className="mx-5">
-              <div className={this.state.loading ?"loading wrapper": "wrapper" }>
-                    {" "}
-                    <svg
-                      className="svg"
-                      width="100px"
-                      height="100px"
-                      viewBox="0 0 100 100"
-                    >
-                      <circle className="circle" cx="50" cy="50" r="48" />
-                    </svg>
-                    <div className="dots">
-                      <div></div>
-                      <div></div>
-                      <div></div>
-                    </div>
+                <div
+                  className={this.state.loading ? "loading wrapper" : "wrapper"}
+                >
+                  {" "}
+                  <svg
+                    className="svg"
+                    width="100px"
+                    height="100px"
+                    viewBox="0 0 100 100"
+                  >
+                    <circle className="circle" cx="50" cy="50" r="48" />
+                  </svg>
+                  <div className="dots">
+                    <div></div>
+                    <div></div>
+                    <div></div>
                   </div>
-                <Form className="submitForm"onSubmit={this.submitForm}>
+                </div>
+                <Form className="submitForm" onSubmit={this.submitForm}>
                   <Form.Group controlId="name">
                     <Form.Label>Your Name & Surname </Form.Label>
                     <Form.Control
@@ -243,16 +237,14 @@ componentDidMount=()=>{
                       START
                     </Button>
                   )}
-                
                 </Form>
               </Col>
             </Row>
-
           </div>
         )}
 
         {this.state.start === "true" && (
-          <div >
+          <div>
             <div className="question my-5">
               {this.state.questions[this.state.answers.question].text}
               {/* {!this.state.questions[this.state.answers.question].img === null && <Image src="holder.js/171x180" rounded />} */}
@@ -285,7 +277,6 @@ componentDidMount=()=>{
                 </Col>
                 <Col xs={12} md={6}>
                   <Button value="3" onClick={this.next} className="shadow">
-                    
                     {
                       this.state.questions[this.state.answers.question]
                         .answers[3].text
@@ -305,48 +296,41 @@ componentDidMount=()=>{
         )}
         {this.state.start === "finish" && (
           <div>
-            
-            <div className=" flex-flow-column align-items-center justify-content-center  text-center my-5 finish">
-            {this.state.timeOut === false? 
-             <div>
-             <h1 className="d-block">
-              "Finished" 
-             </h1>
+            <div className=" flex-flow-column align-items-center justify-content-center  text-center my-5 ">
+              <div className="finish">
+                {this.state.timeOut === false ? (
+                  <div>
+                    <h1 className="d-block">"Finished"</h1>
 
-             <div className="my-3 ">
-    
-               <GiTrophyCup
-                 style={{
-                   fontSize: "100px",
-                   color: "#DD6E42",
-                   textShadow: "20px 20px 50px yellow",
-                 }}
-               />  
-
-             </div>
-        </div>
-            :
-            <div>
-            <h1 className="d-block">
-           "Ooopss... Time is out "
-            </h1>
-
-            <div className="my-3 ">
-     <SiTimescale 
-              style={{
-                fontSize: "100px",
-                color: "#DD6E42",
-                textShadow: "20px 20px 50px yellow",
-              }}
-            />
-
-            </div>
-       </div>
-            }
-          
-
-              <h3 >Your Score </h3>
+                    <div className="my-3 ">
+                      <GiTrophyCup
+                        style={{
+                          fontSize: "100px",
+                          color: "#DD6E42",
+                          textShadow: "20px 20px 50px yellow",
+                        }}
+                      />
+                    </div>
+                  </div>
+                ) : (
+                  <div>
+                    <h1 className="d-block">"Ooopss... Time is out "</h1>
+                    <div className="my-3 ">
+                      <SiTimescale
+                        style={{
+                          fontSize: "100px",
+                          color: "#DD6E42",
+                          textShadow: "20px 20px 50px yellow",
+                        }}
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
+              <div className="score">
+              <h3>Your Score </h3>
               <h1 className="bold"> {this.state.score.totalScore}</h1>
+              </div>
             </div>
             <div className="d-flex flex-flow-column align-items-center justify-content-center  text-center my-3 ">
               <Button

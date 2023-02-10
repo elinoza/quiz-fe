@@ -162,6 +162,28 @@ button.btn:active {
 .submitForm{
 animation:submitForm 5s ease-in-out forwards
 }
+
+.finish{
+  animation: finish 5s ease-in-out forwards
+}
+
+.score{  animation: submitForm 5s ease-in-out forwards}
+@keyframes finish {
+	0% {
+    opacity: 1;
+	}
+    
+    20%{
+		opacity: 1;}
+    60%{ 
+		opacity: 1;}
+    
+	100% {
+	
+		opacity: 0;
+	}
+}
+
 @keyframes submitForm {
 	0% {
     opacity: 0;
