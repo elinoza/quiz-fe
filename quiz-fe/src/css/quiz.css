@@ -96,15 +96,23 @@ button.btn:active {
   margin-left: 5px;
   margin-right: 5px;
 }
+.bold{ font-weight:bold}
+
+.question{
+  font-size: 1.5em;
+  font-weight :bold;
+}
 
 .timer{
     background:white;
-    width:90px;
-    height:30px;
+    width:50px;
+
     border-radius: 3px;
     box-shadow: 2px 4px 8px 0 rgba(0,0,0,0.3);
 	padding: 0 6px;
-    color: #fff;
+
+    color: #ff623e;
+    font-weight:bold
 }
 
 @keyframes leaping {

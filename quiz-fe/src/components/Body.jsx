@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Button, Form, Row, Col, Image } from "react-bootstrap";
 import { GiTrophyCup } from "react-icons/gi";
+import { SiTimescale } from "react-icons/si";
 
 // -in the first page there should be name and start buttton
 // -start fires function-fetch/post-start &retrieves - first question
@@ -94,7 +95,7 @@ componentDidMount=()=>{
   submitForm = (e) => {
     e.preventDefault();
     this.setState({ loading: true });
-    const myTimeout = setTimeout(() => this.afterSubmit(e), 5000);
+    const myTimeout = setTimeout(() => this.afterSubmit(e), 2500);
   };
   manageState = (examInfo) => {
     this.setState({
@@ -144,7 +145,9 @@ componentDidMount=()=>{
         } else {
           questionIndex += 1;
           answers.question = questionIndex;
+          answers.answer=null;
           this.setState({ answers: answers, quoNum: quoNum + 1 });
+          console.log("answers",this.state.answers)
         }
       } else {
         console.log("an error occurred");
@@ -170,26 +173,27 @@ componentDidMount=()=>{
     if (this.state.remainingTime === 0) {
       clearInterval(this.state.intervalId);
       this.getResults();
-      this.setState({ start: "finish", timeOut: true });
+      this.setState({start: "finish" });
+      if(this.state.start =! "finish"){ this.setState({timeOut:true })}
     }
   };
 
   render() {
     return (
-      <Container className="  app mt-5  ">
-        <div className="  d-flex ">
-          <h6 className="d-inline">
-            {" "}
-            {this.state.start === "false" && ""}{" "}
-            {this.state.start === "true" && this.state.quoNum + ". Question"}{" "}
-          </h6>
-          {this.state.start === "true" && 
-          <div className=" timer d-inline ml-auto">
-            <h6>  "Remaining time:"  {this.state.remainingTime }  " seconds"</h6>
+      <Container className="  app mt-1  ">
+        {this.state.start === "true" &&  <div className="  d-flex quoNum p-2">
+   
+     
+       
+            Question {this.state.quoNum }  of   {this.state.questions.length}
+      
+         
+          <div className=" timer d-inline ml-auto text-center">
+          {this.state.remainingTime } 
             
-          </div>}
+          </div>
         </div>
-
+  }
         {this.state.start === "pre" && (
           <div className=" answers  quiz  align-items-center justify-content-center  text-center my-5">
             <Row className="my-5 mx-5">
@@ -248,9 +252,9 @@ componentDidMount=()=>{
         )}
 
         {this.state.start === "true" && (
-          <div>
+          <div >
             <div className="question my-5">
-              <h5>{this.state.questions[this.state.answers.question].text}</h5>
+              {this.state.questions[this.state.answers.question].text}
               {/* {!this.state.questions[this.state.answers.question].img === null && <Image src="holder.js/171x180" rounded />} */}
             </div>
             <div className="answers  align-items-center justify-content-center  text-center my-5 ">
@@ -301,23 +305,48 @@ componentDidMount=()=>{
         )}
         {this.state.start === "finish" && (
           <div>
+            
             <div className=" flex-flow-column align-items-center justify-content-center  text-center my-5 finish">
-              <h1 className="d-block">
-                {this.state.timeOut === true ? "TIME IS OUT! " : "FINISHED"}{" "}
-              </h1>
+            {this.state.timeOut === false? 
+             <div>
+             <h1 className="d-block">
+              "Finished" 
+             </h1>
 
-              <div className="my-3 ">
-                <GiTrophyCup
-                  style={{
-                    fontSize: "100px",
-                    color: "#DD6E42",
-                    textShadow: "20px 20px 50px yellow",
-                  }}
-                />
-              </div>
+             <div className="my-3 ">
+    
+               <GiTrophyCup
+                 style={{
+                   fontSize: "100px",
+                   color: "#DD6E42",
+                   textShadow: "20px 20px 50px yellow",
+                 }}
+               />  
 
-              <h3>YOUR SCORE </h3>
-              <h1> {this.state.score.totalScore}</h1>
+             </div>
+        </div>
+            :
+            <div>
+            <h1 className="d-block">
+           "Ooopss... Time is out "
+            </h1>
+
+            <div className="my-3 ">
+     <SiTimescale 
+              style={{
+                fontSize: "100px",
+                color: "#DD6E42",
+                textShadow: "20px 20px 50px yellow",
+              }}
+            />
+
+            </div>
+       </div>
+            }
+          
+
+              <h3 >Your Score </h3>
+              <h1 className="bold"> {this.state.score.totalScore}</h1>
             </div>
             <div className="d-flex flex-flow-column align-items-center justify-content-center  text-center my-3 ">
               <Button
