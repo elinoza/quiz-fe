@@ -9,7 +9,7 @@ import Body from "./components/Body"
 function App() {
   return (
     <div >
-  <Container className="main my-5 ">
+  <>
 
   
     
@@ -18,7 +18,7 @@ function App() {
  
         
       
-    </Container>
+    </>
     </div>
   );
 }

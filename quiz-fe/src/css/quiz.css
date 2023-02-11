@@ -1,6 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:700,300);
 body {
-  background-color: #fff9e9;
+  background: rgb(238,226,174);
+  background: radial-gradient(circle, rgba(238,226,174,1) 0%, rgba(24,188,155,0.5564819677871149) 100%);
 }
 .main {
   background-color: #18bc9b;
@@ -10,24 +11,28 @@ body {
   box-shadow: 1px 2px 30px 0px rgba(0, 0, 0, 0.3);
   border-radius: 2px;
   padding: 20px;
+  height:600px
 
 }
 .app {
   display: flex;
   flex-flow: column;
+  justify-content: center;
+  padding-left: 70px;
+  padding-right:70px
 
-  padding: 20px;
+
 }
 
 button.btn {
-  width: 250px;
-  height: 50px;
-  padding: 5px;
+
+  
   margin: 10px;
   background-color: #eaeaea;
   border-color: #eaeaea;
   border: 2px;
   color: black;
+
 }
 button.btn:hover {
   transform: scaleX(1.1);
@@ -99,7 +104,7 @@ button.btn:active {
 .bold{ font-weight:bold}
 
 .question{
-  font-size: 1.5em;
+
   font-weight :bold;
 }
 
@@ -155,7 +160,28 @@ button.btn:active {
   stroke-linecap: round;
   opacity:0;
 }
+.abs-btn{
 
+  position:absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(200%,250%);
+}
+@media only screen and (max-width: 500px) {
+  .abs-btn{
+    top: 50%;
+    left: 50%;
+    transform: translate(100%,350%);
+  }}
+
+.btn-start{
+  position:absolute;
+  top:50%;
+  left: 50%;
+  transform: translate(-50%,130%);
+  padding-left:15px;
+
+}
 .quiz{
    animation:quiz 5s ease-in-out forwards
 }
@@ -164,27 +190,11 @@ animation:submitForm 5s ease-in-out forwards
 }
 
 .finish{
-  animation: finish 5s ease-in-out forwards
+  animation: finish 1s ease-in-out forwards
 }
 
-.score{  animation: submitForm 5s ease-in-out forwards}
-@keyframes finish {
-	0% {
-    opacity: 1;
-	}
-    
-    20%{
-		opacity: 1;}
-    60%{ 
-		opacity: 1;}
-    
-	100% {
-	
-		opacity: 0;
-	}
-}
-
-@keyframes submitForm {
+.score{ transform: translateY(-50px) ;animation: score 3s ease-in-out forwards}
+@keyframes submitForm{
 	0% {
     opacity: 0;
 	}
@@ -197,6 +207,41 @@ animation:submitForm 5s ease-in-out forwards
 	100% {
 	
 		opacity: 1;
+	}
+}
+@keyframes finish {
+	0% {
+    opacity: 1;
+	}
+    
+    20%{
+		opacity: 1;}
+    25%{ 
+		opacity: 1;}
+    
+	100% {
+	
+		opacity: 0;
+	}
+}
+
+@keyframes score{
+	0% {
+    opacity: 0;
+    transform: scale(0) translateY(-50px);
+	}
+    
+    20%{
+		opacity: 0;
+    transform: scale(0) translateY(-50px);}
+    60%{ 
+		opacity: 1;
+    transform: scale(1.5) translateY(-50px);}
+    
+	100% {
+	
+		opacity: 1;
+    transform: scale(1.5)translateY(-50px);
 	}
 }
 
