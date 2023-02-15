@@ -1,47 +1,279 @@
-
-body{
-    background-color:#fff9e9
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:700,300);
+body {
+  background: rgb(238,226,174);
+  background: radial-gradient(circle, rgba(238,226,174,1) 0%, rgba(24,188,155,0.5564819677871149) 100%);
 }
 .main {
-    background-color:#4F6D7A; 
-    font-size: 14px;
-    font-family:"Circular", "-apple-system", "system-ui", "Roboto", "Helvetica Neue", sans-serif;
-    color:#EAEAEA;
-    border:1px solid #4F6D7A ;
-    border-radius:2%;
-    padding:20px;
-    
+  background-color: #18bc9b;
+  font-size: 22px;
+  font-family: "Open Sans", Helvetica;
+  color: #eaeaea;
+  box-shadow: 1px 2px 30px 0px rgba(0, 0, 0, 0.3);
+  border-radius: 2px;
+  padding: 20px;
+  height:600px
 
 }
-.app{
-    padding:20px;
-    height:600px;
-    border:1px solid;
+.app {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  padding-left: 70px;
+  padding-right:70px
 
 
 }
 
-button.btn{
+button.btn {
 
-    width:250px;
-    height:50px;
-    padding:5px;
-    margin:10px;
-    background-color:#EAEAEA;
-    border-color:#EAEAEA;
-    color:black;
+  
+  margin: 10px;
+  background-color: #eaeaea;
+  border-color: #eaeaea;
+  border: 2px;
+  color: black;
+
 }
-button.btn:hover{
-    transform :  scaleX(1.1);
-    background-color:#DD6E42 ;
-    border-color:#DD6E42;
+button.btn:hover {
+  transform: scaleX(1.1);
+  background-color: #dd6e42;
+  border-color: #dd6e42;
 }
-button.btn:active{
-    transform :  scaleX(1.1);
-    background-color:#DD6E42 ;
-    border-color:#DD6E42;
+button.btn:active {
+  transform: scaleX(1.1);
+  background-color: #dd6e42;
+  border-color: #dd6e42;
 }
+.wrapper.loading .dots {
+  animation: dotti 0.8s ease-in both;
+}
+.wrapper.loading .dots > div:nth-child(1) {
+  animation: leaping 0.6s ease-in-out forwards infinite alternate 0.4s;
+}
+.wrapper.loading .dots > div:nth-child(2) {
+  animation: leaping 0.6s ease-in-out forwards infinite alternate 0.2s;
+}
+.wrapper.loading .dots > div:nth-child(3) {
+  animation: leaping 0.6s ease-in-out forwards infinite alternate;
+}
+.wrapper.loading .circle {
+  animation: dash 4s linear infinite;
+}
+
+.wrapper.loading ~ .submitForm {
+ 
+  animation: submit 0.6s ease-in-out forwards;
+}
+
 .buttons {
-    align-items: center
+  align-items: center;
 }
 
+.btn:active:focus {
+  background-color: #dd6e42;
+}
+
+.wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background: transparent;
+  width: 100px;
+  height: 100px;
+ 
+}
+
+.dots {
+  position: absolute;
+  display: flex;
+  opacity:0;
+}
+
+.dots > div {
+  background: white;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+.bold{ font-weight:bold}
+
+.question{
+
+  font-weight :bold;
+}
+
+.timer{
+    background:white;
+    width:50px;
+
+    border-radius: 3px;
+    box-shadow: 2px 4px 8px 0 rgba(0,0,0,0.3);
+	padding: 0 6px;
+
+    color: #ff623e;
+    font-weight:bold
+}
+
+@keyframes leaping {
+  0% {
+    transform: translateY(0%);
+  }
+
+  100% {
+    transform: translateY(-20px);
+  }
+}
+@keyframes dotti {
+  0%,
+  60% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1 ;
+  }
+}
+
+@keyframes submit {
+  0% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(0);
+    opacity: 0 !important;
+  }
+}
+.circle {
+  stroke: white;
+  stroke-width: 3;
+  fill: none;
+  transform-origin: center;
+  stroke-linecap: round;
+  opacity:0;
+}
+.abs-btn{
+
+  position:absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(200%,250%);
+}
+@media only screen and (max-width: 500px) {
+  .abs-btn{
+    top: 50%;
+    left: 50%;
+    transform: translate(100%,350%);
+  }}
+
+.btn-start{
+  position:absolute;
+  top:50%;
+  left: 50%;
+  transform: translate(-50%,130%);
+  padding-left:15px;
+
+}
+.quiz{
+   animation:quiz 5s ease-in-out forwards
+}
+.submitForm{
+animation:submitForm 5s ease-in-out forwards
+}
+
+.finish{
+  animation: finish 1s ease-in-out forwards
+}
+
+.score{ transform: translateY(-50px) ;animation: score 3s ease-in-out forwards}
+@keyframes submitForm{
+	0% {
+    opacity: 0;
+	}
+    
+    20%{
+		opacity: 1;}
+    60%{ 
+		opacity: 1;}
+    
+	100% {
+	
+		opacity: 1;
+	}
+}
+@keyframes finish {
+	0% {
+    opacity: 1;
+	}
+    
+    20%{
+		opacity: 1;}
+    25%{ 
+		opacity: 1;}
+    
+	100% {
+	
+		opacity: 0;
+	}
+}
+
+@keyframes score{
+	0% {
+    opacity: 0;
+    transform: scale(0) translateY(-50px);
+	}
+    
+    20%{
+		opacity: 0;
+    transform: scale(0) translateY(-50px);}
+    60%{ 
+		opacity: 1;
+    transform: scale(1.5) translateY(-50px);}
+    
+	100% {
+	
+		opacity: 1;
+    transform: scale(1.5)translateY(-50px);
+	}
+}
+
+@keyframes quiz {
+	0% {
+		transform: scale(0);
+		opacity: 1;
+	}
+    20%{transform: scale(1.5);
+		opacity: 1;}
+    60%{ transform: scale(1.5);
+		opacity: 1;}
+
+	100% {
+		transform: scale(0);
+		opacity: 0;
+	}
+}
+
+@keyframes dash {
+    0% {
+		stroke-dashoffset: 0;
+		stroke-dasharray:196 196;
+	transform: rotate(0deg);
+    opacity:0
+		
+	}
+  20%{opacity:1}
+	100% {
+		stroke-dashoffset: (-196*2 );;
+		stroke-dasharray: 196 196; 
+			transform: rotate(360deg);opacity:1
+
+	}
+}

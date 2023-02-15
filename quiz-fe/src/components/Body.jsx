@@ -1,6 +1,8 @@
 import React from "react";
 import { Container, Button, Form, Row, Col, Image } from "react-bootstrap";
 import { GiTrophyCup } from "react-icons/gi";
+import { SiTimescale } from "react-icons/si";
+import { MdReplay} from "react-icons/md";
 
 // -in the first page there should be name and start buttton
 // -start fires function-fetch/post-start &retrieves - first question
@@ -10,12 +12,12 @@ import { GiTrophyCup } from "react-icons/gi";
 
 class Body extends React.Component {
   state = {
-    quoNum:1,
+    quoNum: 1,
     intervalId: 0,
     remainingTime: 10,
-    timeOut:false,
+    timeOut: false,
     questions: [],
-    start: "false",
+    start: "pre",
     examInfo: [],
     body: {
       candidateName: "",
@@ -29,6 +31,9 @@ class Body extends React.Component {
     score: 0,
   };
 
+  componentDidMount = () => {
+    const myTimeout = setTimeout(() => this.setState({ start: "false" }), 5000);
+  };
   updateField = (e) => {
     let body = { ...this.state.body };
     let currentid = e.currentTarget.id;
@@ -53,8 +58,8 @@ class Body extends React.Component {
       if (response.ok) {
         let examInfo = await response.json();
         let questions = examInfo.questions;
-  this.setState({remainingTime:examInfo.totalDuration })
-        console.log("examInfo:", questions,examInfo);
+        this.setState({ remainingTime: examInfo.totalDuration });
+        console.log("examInfo:", questions, examInfo);
 
         return examInfo;
       } else {
@@ -74,9 +79,7 @@ class Body extends React.Component {
     }
   };
 
-  submitForm = (e) => {
-    e.preventDefault();
-    this.setState({ loading: true });
+  afterSubmit = () => {
     let newIntervalId;
     if (this.state.remainingTime > 0) {
       newIntervalId = setInterval(() => {
@@ -86,6 +89,12 @@ class Body extends React.Component {
     this.setState({ intervalId: newIntervalId });
 
     this.getQuestions();
+  };
+
+  submitForm = (e) => {
+    e.preventDefault();
+    this.setState({ loading: true });
+    const myTimeout = setTimeout(() => this.afterSubmit(e), 2500);
   };
   manageState = (examInfo) => {
     this.setState({
@@ -106,17 +115,18 @@ class Body extends React.Component {
   };
 
   getResults = async () => {
+    clearInterval(this.state.intervalId);
     const url = process.env.REACT_APP_Url;
     //const url = `http://localhost:3005/exams`;
     let response = await fetch(`${url}/${this.state.examInfo._id}`);
     let examInfo = await response.json();
     console.log(examInfo, this.state.remainingTime);
-    this.setState({ score: examInfo });
+    this.setState({ score: examInfo,start: "finish",  });
   };
   nextQuo = async () => {
     try {
       const url = process.env.REACT_APP_Url;
-      let quoNum= this.state.quoNum
+      let quoNum = this.state.quoNum;
       //const url = `http://localhost:3005/exams`;
       let response = await fetch(`${url}/${this.state.examInfo._id}/answer`, {
         method: "POST",
@@ -130,12 +140,15 @@ class Body extends React.Component {
         let questionIndex = this.state.answers.question;
         let answers = { ...this.state.answers };
         if (questionIndex === this.state.questions.length - 1) {
-          this.setState({ start: "finish" });
           this.getResults();
+     
+         
         } else {
           questionIndex += 1;
           answers.question = questionIndex;
-          this.setState({ answers: answers, quoNum: quoNum+1});
+          answers.answer = null;
+          this.setState({ answers: answers, quoNum: quoNum + 1 });
+          console.log("answers", this.state.answers);
         }
       } else {
         console.log("an error occurred");
@@ -158,30 +171,60 @@ class Body extends React.Component {
 
     this.setState({ remainingTime: remainingTime - 1 });
 
- 
     if (this.state.remainingTime === 0) {
-      clearInterval(this.state.intervalId);
-      this.getResults()
-      this.setState({start:"finish", timeOut :true})
+
+      this.getResults();
+      this.setState({ timeOut: true });
     }
   };
 
   render() {
     return (
-      <Container className=" align-items-center justify-content-center   app mt-5  ">
-        <div className=" border-bottom d-flex">
-          <h6 className="d-inline"> {  this.state.start === "false" && "You should answer 5 question" } {  this.state.start === "true" && 
-           this.state.quoNum + ". Question"} </h6>
-          <h6 className="d-inline ml-auto">
-          {  this.state.start === "true" && 
-            "Remaining time:"+ this.state.remainingTime + " seconds"} 
-          </h6>
-        </div>
+      <Container className="  main app my-5   ">
+        {this.state.start === "true" && (
+          <div className="  d-flex quoNum p-2">
+            Question {this.state.quoNum} of {this.state.questions.length}
+            <div className=" timer d-inline ml-auto text-center">
+              {this.state.remainingTime}
+            </div>
+          </div>
+        )}
+        {this.state.start === "pre" && (
+          <div className=" answers  quiz  align-items-center justify-content-center  text-center my-5">
+            <Row className="my-5 ">
+              <Col >
+                <div>
+                  {" "}
+                  <h1>QUIZ GAME</h1>
+                </div>
+              </Col>
+            </Row>
+          </div>
+        )}
+
         {this.state.start === "false" && (
-          <div className="answers  align-items-center justify-content-center  text-center my-5">
-            <Row className="my-5">
-              <Col>
-                <Form onSubmit={this.submitForm}>
+          <div className="answers   align-items-center justify-content-center  text-center my-5">
+            <Row >
+              <Col >
+                <div
+                  className={this.state.loading ? "loading wrapper" : "wrapper"}
+                >
+                  {" "}
+                  <svg
+                    className="svg"
+                    width="100px"
+                    height="100px"
+                    viewBox="0 0 100 100"
+                  >
+                    <circle className="circle" cx="50" cy="50" r="48" />
+                  </svg>
+                  <div className="dots">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                </div>
+                <Form className="submitForm" onSubmit={this.submitForm}>
                   <Form.Group controlId="name">
                     <Form.Label>Your Name & Surname </Form.Label>
                     <Form.Control
@@ -190,12 +233,14 @@ class Body extends React.Component {
                       placeholder="Enter your name please"
                       value={this.state.body.candidateName}
                       onChange={this.updateField}
+                      className="form-control-sm"
                     />
                   </Form.Group>
                   {this.state.body.candidateName && (
-                    <Button className="shadow" type="submit">
-                      START
-                    </Button>
+                    <div className="btn-start "> <Button className="shadow " type="submit">
+                    Start
+                   </Button></div>
+                   
                   )}
                 </Form>
               </Col>
@@ -204,15 +249,15 @@ class Body extends React.Component {
         )}
 
         {this.state.start === "true" && (
-          <div>
-            <div className="question my-5">
-              <h5>{this.state.questions[this.state.answers.question].text}</h5>
+          <div className="questions-wrapper">
+            <div className="question my-2">
+              {this.state.questions[this.state.answers.question].text}
               {/* {!this.state.questions[this.state.answers.question].img === null && <Image src="holder.js/171x180" rounded />} */}
             </div>
             <div className="answers  align-items-center justify-content-center  text-center my-5 ">
               <Row className="my-5">
                 <Col xs={12} md={6}>
-                  <Button value="0" onClick={this.next} className="shadow">
+                  <Button value="0" onClick={this.next} className="shadow btn-block">
                     {
                       this.state.questions[this.state.answers.question]
                         .answers[0].text
@@ -220,7 +265,7 @@ class Body extends React.Component {
                   </Button>{" "}
                 </Col>
                 <Col xs={12} md={6}>
-                  <Button value="1" onClick={this.next} className="shadow">
+                  <Button value="1" onClick={this.next} className="shadow btn-block">
                     {
                       this.state.questions[this.state.answers.question]
                         .answers[1].text
@@ -228,7 +273,7 @@ class Body extends React.Component {
                   </Button>{" "}
                 </Col>
                 <Col xs={12} md={6}>
-                  <Button value="2" onClick={this.next} className="shadow">
+                  <Button value="2" onClick={this.next} className="shadow  btn-block">
                     {
                       this.state.questions[this.state.answers.question]
                         .answers[2].text
@@ -236,7 +281,7 @@ class Body extends React.Component {
                   </Button>{" "}
                 </Col>
                 <Col xs={12} md={6}>
-                  <Button value="3" onClick={this.next} className="shadow">
+                  <Button value="3" onClick={this.next} className="shadow btn-block">
                     {
                       this.state.questions[this.state.answers.question]
                         .answers[3].text
@@ -246,41 +291,67 @@ class Body extends React.Component {
               </Row>
             </div>
             {this.state.answers.answer != null && (
-              <Button onClick={this.nextQuo} className="shadow">
-                NEXT{" "}
-              </Button>
+              <div className="  text-center my-3 abs-btn ">
+                <Button onClick={this.nextQuo} className=" shadow">
+                  Next{" "}
+                </Button>
+              </div>
             )}
           </div>
         )}
         {this.state.start === "finish" && (
-          <>
-            <div className=" d-flex flex-flow-column align-items-center justify-content-center  text-center my-5 finish">
-             <h1 className="d-block">{ this.state.timeOut === true ? "TIME IS OUT! ": "FINISHED" } </h1>
+          <div>
+            <div className=" flex-flow-column align-items-center justify-content-center  text-center my-5 ">
+              <div className="finish">
+                {this.state.timeOut === false ? (
+                  <div>
+                    <h1 className="d-block">"Finished"</h1>
 
-              <div>
-                <GiTrophyCup
-                  style={{
-                    fontSize: "100px",
-                    color: "#DD6E42",
-                    textShadow: "20px 20px 50px yellow",
-                  }}
-                />
+                    <div className="my-3 ">
+                      <GiTrophyCup
+                        style={{
+                          fontSize: "100px",
+                          color: "#DD6E42",
+                          textShadow: "20px 20px 50px yellow",
+                        }}
+                      />
+                    </div>
+                  </div>
+                ) : (
+                  <div>
+                    <h1 className="d-block">"Ooopss... Time is out "</h1>
+                    <div className="my-3 ">
+                      <SiTimescale
+                        style={{
+                          fontSize: "100px",
+                          color: "#DD6E42",
+                          textShadow: "20px 20px 50px yellow",
+                        }}
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
-
-              <h3>YOUR SCORE </h3>
+              <div className="score">
+              <h3>Your Score </h3>
+              <h1 className="bold"> {this.state.score.totalScore}</h1>
+              </div>
             </div>
-            <div className="d-flex flex-flow-column align-items-center justify-content-center  text-center my-5 finish">
-              <h1> {this.state.score.totalScore}</h1>
+            <div className="d-flex flex-flow-column align-items-center justify-content-center  text-center my-3 ">
+            
+              <Button
+                className="shadow "
+                onClick={() => window.location.reload(false)}
+              >
+                
+              Replay <MdReplay   style={{
+                          fontSize: "20px",
+                          color: "#DD6E42",
+                          textShadow: "20px 20px 50px yellow",
+                        }} />
+              </Button>
             </div>
-            <div className ="buttons">
-            <Button
-              className="shadow "
-              onClick={() => window.location.reload(false)}
-            >
-              REPLAY
-            </Button>
-            </div>
-          </>
+          </div>
         )}
       </Container>
     );
