@@ -18,3 +18,7 @@ To use the JavaScript Quiz Application, follow these steps:
 4. Click the "Next" button to move to the next question.
 5. The quiz is timed, with the amount of time per question determined by the back-end.
 6. After answering all questions, the user's score will be calculated and displayed, regardless of whether they answered all questions within the allotted time or not.
+
+### You can watch how the game looks from a user experience perspective in this x2 sped-up video."
+https://user-images.githubusercontent.com/72200043/219347867-b18f8567-7b47-4250-ab65-67cb1323ee8f.mp4
+
