@@ -1,5 +1,5 @@
 #  🎉 JavaScript Quiz Application 🎉
-This is a JavaScript quiz application that asks users questions and provides them with scores. The quiz is timed and the application is built using `ReactJS, Bootstrap, and  CSS animations`. The questions are fetched from the back-end built using Node.js and Express. The questions are not fetched from a database or an API.
+This is a JavaScript quiz application that asks users questions and provides them with scores. The quiz is timed and the application is built using `ReactJS, Bootstrap, and  CSS animations`. The questions are fetched from the back-end built using Node.js and Express. The questions are not fetched from a database or an external API.
 
 ## Getting Started 🚀
 To get started with this project, follow these steps:
