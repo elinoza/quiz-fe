@@ -9,6 +9,9 @@ To get started with this project, follow these steps:
 3.Run the command npm start from the root directory to start the front-end.
 4.Open your browser and go to http://localhost:3000.
 
+OR play with it here--->
+ https://quiz-fe-elinoza.vercel.app/
+
 ## Usage 🎓
 To use the JavaScript Quiz Application, follow these steps:
 
