@@ -37,7 +37,7 @@ class Body extends React.Component {
   updateField = (e) => {
     let body = { ...this.state.body };
     let currentid = e.currentTarget.id;
-    console.log(e.currentTarget.id);
+  
 
     body[currentid] = e.currentTarget.value;
     this.setState({ body: body });
@@ -54,12 +54,11 @@ class Body extends React.Component {
           "Content-Type": "application/json",
         }),
       });
-      console.log(response);
+  
       if (response.ok) {
         let examInfo = await response.json();
         let questions = examInfo.questions;
         this.setState({ remainingTime: examInfo.totalDuration });
-        console.log("examInfo:", questions, examInfo);
 
         return examInfo;
       } else {
@@ -120,7 +119,6 @@ class Body extends React.Component {
     //const url = `http://localhost:3005/exams`;
     let response = await fetch(`${url}/${this.state.examInfo._id}`);
     let examInfo = await response.json();
-    console.log(examInfo, this.state.remainingTime);
     this.setState({ score: examInfo,start: "finish",  });
   };
   nextQuo = async () => {
@@ -135,7 +133,6 @@ class Body extends React.Component {
           "Content-Type": "application/json",
         }),
       });
-      console.log(response);
       if (response.ok) {
         let questionIndex = this.state.answers.question;
         let answers = { ...this.state.answers };
@@ -148,10 +145,10 @@ class Body extends React.Component {
           answers.question = questionIndex;
           answers.answer = null;
           this.setState({ answers: answers, quoNum: quoNum + 1 });
-          console.log("answers", this.state.answers);
+
         }
       } else {
-        console.log("an error occurred");
+  
         let error = await response.json();
         this.setState({
           errMessage: error.message,
