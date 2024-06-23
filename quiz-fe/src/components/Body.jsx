@@ -62,7 +62,6 @@ class Body extends React.Component {
 
         return examInfo;
       } else {
-        console.log("an error occurred");
         let error = await response.json();
         this.setState({
           errMessage: error.message,
@@ -70,7 +69,6 @@ class Body extends React.Component {
         });
       }
     } catch (e) {
-      console.log(e); // Error
       this.setState({
         errMessage: e.message,
         loading: false,
@@ -156,7 +154,6 @@ class Body extends React.Component {
         });
       }
     } catch (e) {
-      console.log(e); // Error
       this.setState({
         errMessage: e.message,
         loading: false,
