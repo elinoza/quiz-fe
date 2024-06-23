@@ -2,7 +2,7 @@ import React from "react";
 import { Container, Button, Form, Row, Col, Image } from "react-bootstrap";
 import { GiTrophyCup } from "react-icons/gi";
 import { SiTimescale } from "react-icons/si";
-import { MdReplay} from "react-icons/md";
+import { MdReplay } from "react-icons/md";
 
 // -in the first page there should be name and start buttton
 // -start fires function-fetch/post-start &retrieves - first question
@@ -37,8 +37,6 @@ class Body extends React.Component {
   updateField = (e) => {
     let body = { ...this.state.body };
     let currentid = e.currentTarget.id;
-  
-
     body[currentid] = e.currentTarget.value;
     this.setState({ body: body });
   };
@@ -54,7 +52,7 @@ class Body extends React.Component {
           "Content-Type": "application/json",
         }),
       });
-  
+
       if (response.ok) {
         let examInfo = await response.json();
         let questions = examInfo.questions;
@@ -117,7 +115,7 @@ class Body extends React.Component {
     //const url = `http://localhost:3005/exams`;
     let response = await fetch(`${url}/${this.state.examInfo._id}`);
     let examInfo = await response.json();
-    this.setState({ score: examInfo,start: "finish",  });
+    this.setState({ score: examInfo, start: "finish" });
   };
   nextQuo = async () => {
     try {
@@ -136,17 +134,13 @@ class Body extends React.Component {
         let answers = { ...this.state.answers };
         if (questionIndex === this.state.questions.length - 1) {
           this.getResults();
-     
-         
         } else {
           questionIndex += 1;
           answers.question = questionIndex;
           answers.answer = null;
           this.setState({ answers: answers, quoNum: quoNum + 1 });
-
         }
       } else {
-  
         let error = await response.json();
         this.setState({
           errMessage: error.message,
@@ -166,7 +160,6 @@ class Body extends React.Component {
     this.setState({ remainingTime: remainingTime - 1 });
 
     if (this.state.remainingTime === 0) {
-
       this.getResults();
       this.setState({ timeOut: true });
     }
@@ -174,7 +167,7 @@ class Body extends React.Component {
 
   render() {
     return (
-      <Container className="  main app my-5   ">
+      <Container className=" main app my-5">
         {this.state.start === "true" && (
           <div className="  d-flex quoNum p-2">
             Question {this.state.quoNum} of {this.state.questions.length}
@@ -186,7 +179,7 @@ class Body extends React.Component {
         {this.state.start === "pre" && (
           <div className=" answers  quiz  align-items-center justify-content-center  text-center my-5">
             <Row className="my-5 ">
-              <Col >
+              <Col>
                 <div>
                   {" "}
                   <h1>QUIZ GAME</h1>
@@ -198,8 +191,8 @@ class Body extends React.Component {
 
         {this.state.start === "false" && (
           <div className="answers   align-items-center justify-content-center  text-center my-5">
-            <Row >
-              <Col >
+            <Row>
+              <Col>
                 <div
                   className={this.state.loading ? "loading wrapper" : "wrapper"}
                 >
@@ -231,10 +224,12 @@ class Body extends React.Component {
                     />
                   </Form.Group>
                   {this.state.body.candidateName && (
-                    <div className="btn-start "> <Button className="shadow " type="submit">
-                    Start
-                   </Button></div>
-                   
+                    <div className="btn-start ">
+                      {" "}
+                      <Button className="shadow " type="submit">
+                        Start
+                      </Button>
+                    </div>
                   )}
                 </Form>
               </Col>
@@ -251,7 +246,11 @@ class Body extends React.Component {
             <div className="answers  align-items-center justify-content-center  text-center my-5 ">
               <Row className="my-5">
                 <Col xs={12} md={6}>
-                  <Button value="0" onClick={this.next} className="shadow btn-block">
+                  <Button
+                    value="0"
+                    onClick={this.next}
+                    className="shadow btn-block"
+                  >
                     {
                       this.state.questions[this.state.answers.question]
                         .answers[0].text
@@ -259,7 +258,11 @@ class Body extends React.Component {
                   </Button>{" "}
                 </Col>
                 <Col xs={12} md={6}>
-                  <Button value="1" onClick={this.next} className="shadow btn-block">
+                  <Button
+                    value="1"
+                    onClick={this.next}
+                    className="shadow btn-block"
+                  >
                     {
                       this.state.questions[this.state.answers.question]
                         .answers[1].text
@@ -267,7 +270,11 @@ class Body extends React.Component {
                   </Button>{" "}
                 </Col>
                 <Col xs={12} md={6}>
-                  <Button value="2" onClick={this.next} className="shadow  btn-block">
+                  <Button
+                    value="2"
+                    onClick={this.next}
+                    className="shadow  btn-block"
+                  >
                     {
                       this.state.questions[this.state.answers.question]
                         .answers[2].text
@@ -275,7 +282,11 @@ class Body extends React.Component {
                   </Button>{" "}
                 </Col>
                 <Col xs={12} md={6}>
-                  <Button value="3" onClick={this.next} className="shadow btn-block">
+                  <Button
+                    value="3"
+                    onClick={this.next}
+                    className="shadow btn-block"
+                  >
                     {
                       this.state.questions[this.state.answers.question]
                         .answers[3].text
@@ -327,22 +338,23 @@ class Body extends React.Component {
                 )}
               </div>
               <div className="score">
-              <h3>Your Score </h3>
-              <h1 className="bold"> {this.state.score.totalScore}</h1>
+                <h3>Your Score </h3>
+                <h1 className="bold"> {this.state.score.totalScore}</h1>
               </div>
             </div>
             <div className="d-flex flex-flow-column align-items-center justify-content-center  text-center my-3 ">
-            
               <Button
                 className="shadow "
                 onClick={() => window.location.reload(false)}
               >
-                
-              Replay <MdReplay   style={{
-                          fontSize: "20px",
-                          color: "#DD6E42",
-                          textShadow: "20px 20px 50px yellow",
-                        }} />
+                Replay{" "}
+                <MdReplay
+                  style={{
+                    fontSize: "20px",
+                    color: "#DD6E42",
+                    textShadow: "20px 20px 50px yellow",
+                  }}
+                />
               </Button>
             </div>
           </div>
